@@ -6,12 +6,38 @@ package com.devcolibri.database;
 import java.sql.*;
 
 public class Main {
-    public static final String URL = "jdbc:mysql://localhost:3306/mydbtest?autoReconnect=true&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC";
+   /* public static final String URL = "jdbc:mysql://localhost:3306/mydbtest?autoReconnect=true&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC";
     private static final String USER = "root";
     private static final String PASSWORD = "root";
-
+*/
     public static void main(String[] args) {
-        Connection connection = null;
+
+        DBWorker dbWorker = new DBWorker();
+
+        String qerry = "select * from users_tb where id = 2";
+        try {
+            Statement statement = dbWorker.getConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(qerry);
+
+            while (resultSet.next()){
+                User user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setUsername(resultSet.getString("username"));
+                user.setPassword(resultSet.getString("password"));
+
+                System.out.println(user);
+               /* int id = resultSet.getInt(1);
+                System.out.println(id);*/
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
+       /* Connection connection = null;
         Driver driver;
 
         try   {
@@ -50,6 +76,6 @@ public class Main {
                     e.printStackTrace();
                 }
             }
-        }
+        }*/
     }
 }
